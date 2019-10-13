@@ -1,0 +1,10 @@
+aux_source_directory(. DIR_SRCS)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+link_directories(
+	${CMAKE_CURRENT_SOURCE_DIR}/lib
+)
+link_libraries(
+    curl
+)
+
+add_library(sts_sdk ${DIR_SRCS})
