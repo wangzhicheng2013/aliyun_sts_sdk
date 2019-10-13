@@ -57,7 +57,8 @@ public:
             credentials.AccessKeyId = Credentials["AccessKeyId"].asString();
         }
         if (false == Credentials["Expiration"].empty()) {
-            credentials.Expiration = Credentials["Expiration"].asString();
+            std::string utc_time = Credentials["Expiration"].asString();
+            Utility::convert_to_localtime(utc_time, credentials.Expiration);
         }
         if (false == Credentials["SecurityToken"].empty()) {
             credentials.SecurityToken = Credentials["SecurityToken"].asString();
