@@ -179,26 +179,13 @@ public:
      */
     static void convert_to_localtime(const std::string &utc_time, std::string &local_time) {
         std::string str = utc_time;
-        //struct tm unixdate = {0};
         struct tm unixdate;
         strptime(str.c_str(), "%Y-%m-%dT%H:%M:%SZ", &unixdate);
-        time_t fakeUnixTime = mktime(&unixdate); 
-        struct tm *fakeDate = gmtime(&fakeUnixTime);
-        int32_t nOffset = fakeDate->tm_hour - unixdate.tm_hour;
-        if (nOffset > 12) {
-            nOffset = 24 - nOffset;
-        }
-        fakeUnixTime = fakeUnixTime - nOffset * 3600;
-
+        time_t ltime = mktime(&unixdate);
+        ltime += 8 * 3600;
+        struct tm *timeptr = localtime(&ltime);
         char buf[64] = {0};
-        struct tm *ttm = gmtime(&fakeUnixTime);
-        snprintf(buf, sizeof(buf), "%.4d-%.2d-%.2d %.2d:%.2d:%.2d", ttm->tm_year + 1900, 
-                                                                      ttm->tm_mon + 1, 
-                                                                      ttm->tm_mday,
-                                                                      ttm->tm_hour,
-                                                                      ttm->tm_min,
-                                                                      ttm->tm_sec);
-
+        strftime(buf, sizeof(buf),"%Y-%m-%d %H:%M:%S", timeptr);
         local_time = buf;
     }
 };
