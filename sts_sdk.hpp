@@ -19,17 +19,18 @@ public:
     bool init() {
         return curlclient_.init();
     }
-    void get_credentials(Credentials &credentials) {
+    bool get_credentials(Credentials &credentials) {
         set_timestamp();
         set_signatureNonce();
         set_RoleSessionName();
         if (false == generate_certain_url()) {
-            return;
+            return false;
         }
-	//sts_url_ = "https://sts.aliyuncs.com/AccessKeyId=LTAI4FdyyA3S62nWuxiqQWBW&Action=AssumeRole&Format=json&RoleArn=acs:ram::1825170684977218:role/wangbin3&RoleSessionName=Alice0&SignatureMethod=HMAC-SHA1&SignatureNonce=23272e40-cf7a-0037-2329-100000000000&SignatureVersion=1.0&Timestamp=2019-10-12T23:58:40Z&Version=2015-04-01&Signature=WawgtIl7sXYWR1s4n9NBwpZDvS4%3D";
-	//sts_url_ = "https://sts.aliyuncs.com/?AccessKeyId=LTAI4FdyyA3S62nWuxiqQWBW&Action=AssumeRole&Format=json&RoleArn=acs:ram::1825170684977218:role/wangbin3&RoleSessionName=Alice0&SignatureMethod=HMAC-SHA1&SignatureNonce=23272e40-cf7a-0037-2329-300000000000&SignatureVersion=1.0&Timestamp=2019-10-12T23:59:30Z&Version=2015-04-01&Signature=ZNfUrgOOaU%2FwhFU9pqKyhJ%2FuVhU%3D";
-        curlclient_.curl_get(sts_url_.c_str(), response_str_, http_code_);
+        if (false == curlclient_.curl_get(sts_url_.c_str(), response_str_, http_code_)) {
+            return false;
+        }
         parse_sts_response(response_str_, credentials);
+        return true;
     }
     void set_AccessKeyId(const std::string &key) {
         AccessKeyId_ = key;
