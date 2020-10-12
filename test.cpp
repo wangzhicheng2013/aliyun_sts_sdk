@@ -13,9 +13,9 @@ int main() {
         std::cout << credentials.AccessKeySecret << std::endl;
         std::cout << credentials.Expiration << std::endl;
         std::cout << credentials.SecurityToken << std::endl;
-        std::string AccessKeyId = "LTAI4FdyyA3S62nWuxiqQWBW";
-        std::string AccessKeySecret = "TmjUSpsLMQAexqWN0HL8RYSxhkVYvM&";
-        std::string RoleArn = "acs:ram::1825170684977218:role/wangbin3";
+        std::string AccessKeyId = "LTAI4FdyyA3S62nWuxiqQWBW123";
+        std::string AccessKeySecret = "TmjUSpsLMQAexqWN0HL8RYSxhkVYvM&123";
+        std::string RoleArn = "acs:ram::1825170684977218:role/xxx3123";
         sdk.set_AccessKeyId(AccessKeyId);
         sdk.set_AccessKeySecret(AccessKeySecret);
         sdk.set_RoleArn(RoleArn);
